@@ -15,3 +15,5 @@ Make sure you have set $GOPATH and $GOPATH/bin is in $PATH
 `$ Grypto`
 
 ![Screenshot](https://i.imgur.com/duwQ9Gd.png)
+
+Depends on [tview](https://github.com/rivo/tview/wiki)
