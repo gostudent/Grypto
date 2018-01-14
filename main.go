@@ -69,8 +69,8 @@ func main() {
 	eth := GetETH()
 	app := tview.NewApplication()
 	list := tview.NewList().
-		AddItem("Bitcoin (BTC)", btc, 'a', nil).
-		AddItem("Ethereum (ETH)", eth, 'b', nil).
+		AddItem("Bitcoin (BTC)", "\u20B9 " + btc, 'a', nil).
+		AddItem("Ethereum (ETH)", "\u20B9 " + eth, 'b', nil).
 		AddItem("Ripple (XRP)", "To Be Implemented", 'c', nil).
 		AddItem("Bitcoin Cash (BCH)", "To Be Implemented", 'd', nil).
 		AddItem("Carnado (ADA)", "To Be Implemented", 'e', nil).
