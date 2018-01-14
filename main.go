@@ -46,12 +46,31 @@ func GetBTC() string {
 	return btcPrice
 }
 
+func GetETH() string {
+	url := "https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=INR"
+	res, err := http.Get(url)
+	if err != nil {
+		panic(err.Error())
+	}
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		panic(err.Error())
+	}
+	// Accessing Value using empty interface
+	var value interface{}
+	err = json.Unmarshal(body, &value)
+	price := value.([]interface{})
+	result := price[0].(map[string]interface{})
+	btcPrice := result["price_inr"].(string)
+	return btcPrice
+}
 func main() {
 	btc := GetBTC()
+	eth := GetETH()
 	app := tview.NewApplication()
 	list := tview.NewList().
 		AddItem("Bitcoin (BTC)", btc, 'a', nil).
-		AddItem("Ethereum (ETH)", "To Be Implemented", 'b', nil).
+		AddItem("Ethereum (ETH)", eth, 'b', nil).
 		AddItem("Ripple (XRP)", "To Be Implemented", 'c', nil).
 		AddItem("Bitcoin Cash (BCH)", "To Be Implemented", 'd', nil).
 		AddItem("Carnado (ADA)", "To Be Implemented", 'e', nil).
