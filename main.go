@@ -61,8 +61,8 @@ func GetETH() string {
 	err = json.Unmarshal(body, &value)
 	price := value.([]interface{})
 	result := price[0].(map[string]interface{})
-	btcPrice := result["price_inr"].(string)
-	return btcPrice
+	ethPrice := result["price_inr"].(string)
+	return ethPrice
 }
 func main() {
 	btc := GetBTC()
