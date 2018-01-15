@@ -7,28 +7,8 @@ import (
 	"net/http"
 )
 
-/*type Crypto struct {
-	id                 string
-	name               string
-	symbol             string
-	rank               int
-	price_usd          float64
-	h_volume_usd       float64
-	market_cap_usd     float64
-	available_supply   float64
-	total_supply       float64
-	max_supply         float64
-	percent_change_1h  float64
-	percent_change_24h float64
-	percent_change_7d  float64
-	last_updated       int
-	price_inr          float64
-	h_volume_usd       float64
-	market_cap_usd     float64
-}*/
-
-func GetBTC() string {
-	url := "https://api.coinmarketcap.com/v1/ticker/bitcoin/?convert=INR"
+func GetCurr() (string, string, string, string, string, string)  {
+	url := "https://api.coinmarketcap.com/v1/ticker/?limit=6&convert=INR"
 	res, err := http.Get(url)
 	if err != nil {
 		panic(err.Error())
@@ -37,117 +17,36 @@ func GetBTC() string {
 	if err != nil {
 		panic(err.Error())
 	}
-	// Accessing Value using empty interface
-	var value interface{}
-	err = json.Unmarshal(body, &value)
-	price := value.([]interface{})
-	result := price[0].(map[string]interface{})
-	btcPrice := result["price_inr"].(string)
-	return btcPrice
-}
 
-func GetETH() string {
-	url := "https://api.coinmarketcap.com/v1/ticker/ethereum/?convert=INR"
-	res, err := http.Get(url)
-	if err != nil {
-		panic(err.Error())
-	}
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		panic(err.Error())
-	}
-	// Accessing Value using empty interface
-	var value interface{}
-	err = json.Unmarshal(body, &value)
-	price := value.([]interface{})
-	result := price[0].(map[string]interface{})
-	ethPrice := result["price_inr"].(string)
-	return ethPrice
-}
 
-func GetXRP() string {
-	url := "https://api.coinmarketcap.com/v1/ticker/ripple/?convert=INR"
-	res, err := http.Get(url)
-	if err != nil {
-		panic(err.Error())
-	}
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		panic(err.Error())
-	}
 	// Accessing Value using empty interface
 	var value interface{}
 	err = json.Unmarshal(body, &value)
 	price := value.([]interface{})
-	result := price[0].(map[string]interface{})
-	xrpPrice := result["price_inr"].(string)
-	return xrpPrice
-}
 
-func GetBCH() string {
-	url := "https://api.coinmarketcap.com/v1/ticker/bitcoin-cash/?convert=INR"
-	res, err := http.Get(url)
-	if err != nil {
-		panic(err.Error())
-	}
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		panic(err.Error())
-	}
-	// Accessing Value using empty interface
-	var value interface{}
-	err = json.Unmarshal(body, &value)
-	price := value.([]interface{})
-	result := price[0].(map[string]interface{})
-	bchPrice := result["price_inr"].(string)
-	return bchPrice
-}
+	result0 := price[0].(map[string]interface{})
+	btcPrice := result0["price_inr"].(string)
 
-func GetLTC() string {
-	url := "https://api.coinmarketcap.com/v1/ticker/litecoin/?convert=INR"
-	res, err := http.Get(url)
-	if err != nil {
-		panic(err.Error())
-	}
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		panic(err.Error())
-	}
-	// Accessing Value using empty interface
-	var value interface{}
-	err = json.Unmarshal(body, &value)
-	price := value.([]interface{})
-	result := price[0].(map[string]interface{})
-	ltcPrice := result["price_inr"].(string)
-	return ltcPrice
-}
+  result1 := price[1].(map[string]interface{})
+  ethPrice := result1["price_inr"].(string)
 
-func GetADA() string {
-	url := "https://api.coinmarketcap.com/v1/ticker/cardano/?convert=INR"
-	res, err := http.Get(url)
-	if err != nil {
-		panic(err.Error())
-	}
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		panic(err.Error())
-	}
-	// Accessing Value using empty interface
-	var value interface{}
-	err = json.Unmarshal(body, &value)
-	price := value.([]interface{})
-	result := price[0].(map[string]interface{})
-	ripPrice := result["price_inr"].(string)
-	return ripPrice
+  result2 := price[2].(map[string]interface{})
+  xrpPrice := result2["price_inr"].(string)
+
+  result3 := price[3].(map[string]interface{})
+  bchPrice := result3["price_inr"].(string)
+
+  result4 := price[4].(map[string]interface{})
+  adaPrice := result4["price_inr"].(string)
+
+  result5 := price[5].(map[string]interface{})
+  ltcPrice := result5["price_inr"].(string)
+
+	return btcPrice, ethPrice, xrpPrice, bchPrice, adaPrice, ltcPrice
 }
 
 func main() {
-	btc := GetBTC()
-	eth := GetETH()
-	xrp := GetXRP()
-	bch := GetBCH()
-	ada := GetADA()
-	ltc := GetLTC()
+	btc, eth, xrp, bch, ada, ltc := GetCurr()
 	app := tview.NewApplication()
 	list := tview.NewList().
 		AddItem("Bitcoin (BTC)", "\u20B9 " + btc, 'a', nil).
